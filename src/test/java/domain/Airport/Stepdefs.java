@@ -1,4 +1,4 @@
-package domain;
+package domain.Airport;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;

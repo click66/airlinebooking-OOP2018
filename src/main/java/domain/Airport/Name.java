@@ -16,12 +16,8 @@ public class Name
      */
     public Name(String value)
     {
-        if (value.length() != 3) {
-            throw new InvalidArgument("Airport names must be 3 characters long");
-        }
-
-        if (value.matches("[A-Z]+\\.?")) {
-            throw new InvalidArgument("Airport names must only consist of upper-case characters");
+        if (!value.matches("[A-Z]{3}")) {
+            throw new InvalidArgument("Airport names must consist of 3 upper-case letters");
         }
 
         this.value = value;
@@ -31,5 +27,11 @@ public class Name
     public boolean equals(Object obj)
     {
         return obj instanceof Name && ((Name) obj).value.equals(value);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return value.hashCode();
     }
 }

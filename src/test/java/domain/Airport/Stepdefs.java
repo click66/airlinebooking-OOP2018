@@ -1,29 +1,29 @@
 package domain.Airport;
 
+import application.Airports;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import domain.Airport.Repository.HashmapRepository;
 import domain.Airport.Repository.Repository;
-import domain.Airport.Service.UniqueNameCheck;
 import org.junit.Assert;
 
 import java.util.UUID;
 
 public class Stepdefs
 {
-    private Repository airportRepository;
+    private Airports airports;
 
-    private UniqueNameCheck uniqueNameCheckService;
+    private Repository airportRepository;
 
     private UUID uuid;
 
     @Before
     public void before()
     {
-        airportRepository      = new HashmapRepository();
-        uniqueNameCheckService = new UniqueNameCheck(airportRepository);
+        airportRepository = new HashmapRepository();
+        airports          = new Airports(airportRepository);
 
         uuid = UUID.randomUUID();
     }
@@ -40,12 +40,7 @@ public class Stepdefs
     public void i_create_an_airport_with_the_name(String value)
     {
         try {
-            Name name = new Name(value);
-            if (!uniqueNameCheckService.alreadyExistsByName(name)) {
-                airportRepository.store(
-                    new Airport(uuid, name)
-                );
-            }
+            airports.registerNewAirport(new Name(value));
         } catch (Exception exception) {
             // Ignore exception
         }
@@ -65,11 +60,15 @@ public class Stepdefs
     @Then("^an airport called (.*) will not exist$")
     public void an_airport_called_will_not_exist(String value)
     {
-        Name name = new Name(value);
+        try {
+            Name name = new Name(value);
 
-        Airport fetched = airportRepository.fetchByName(name);
+            Airport fetched = airportRepository.fetchByName(name);
 
-        Assert.assertNull(fetched);
+            Assert.assertNull(fetched);
+        } catch (Exception exception) {
+            // Ignore exception
+        }
     }
 
     @Then("^it should fail to create the airport$")

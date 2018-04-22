@@ -23,6 +23,7 @@ Feature: Create An Airport
   Scenario Outline: Create an airport with an invalid name
     When I create an airport with the name <name>
     Then it should fail to create the airport
+    And an airport called <name> will not exist
     Examples:
       | name    |
       | DE      |

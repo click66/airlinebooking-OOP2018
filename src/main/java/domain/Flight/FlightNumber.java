@@ -3,6 +3,9 @@ package domain.Flight;
 import domain.Airline.Designation;
 import domain.exception.InvalidArgument;
 
+/**
+ * "Flight number" value object
+ */
 public class FlightNumber
 {
     private Designation airlineDesignation;

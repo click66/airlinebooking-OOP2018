@@ -6,16 +6,16 @@ import java.util.UUID;
 
 import static org.junit.Assert.*;
 
-public class UFIDTest
+public class GUFITest
 {
     @Test
     public void staticFactoryCreatesRandomUfid()
     {
-        UFID randomUfid = UFID.randomUFID();
+        GUFI randomGUFI = GUFI.randomUFID();
 
-        UFID anotherRadomUfid = UFID.randomUFID();
+        GUFI anotherRadomGUFI = GUFI.randomUFID();
 
-        assertNotSame(randomUfid, anotherRadomUfid);
+        assertNotSame(randomGUFI, anotherRadomGUFI);
     }
 
     @Test
@@ -23,8 +23,8 @@ public class UFIDTest
     {
         UUID uuid = UUID.randomUUID();
 
-        UFID one = new UFID(uuid);
-        UFID another = new UFID(uuid);
+        GUFI one = new GUFI(uuid);
+        GUFI another = new GUFI(uuid);
 
         assertEquals(one, another);
         assertTrue(one.equals(another));

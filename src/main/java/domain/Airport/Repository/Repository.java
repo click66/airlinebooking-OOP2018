@@ -5,25 +5,8 @@ import domain.Airport.Name;
 
 import java.util.UUID;
 
-public interface Repository
+public interface Repository extends domain.Repository<Airport>
 {
-    /**
-     * Store an airport (can be new or updated existing)
-     *
-     * @param airport The airport save
-     */
-    void store(Airport airport);
-
-    /**
-     * Fetch an airport by UUID.
-     * Will return null if no airport exists with this UUID
-     *
-     * @param uuid Airport identifier
-     *
-     * @return Airport|null
-     */
-    Airport fetch(UUID uuid);
-
     /**
      * Fetch an airport by name.
      * Will return null if no airport exists with this name

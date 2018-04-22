@@ -5,25 +5,8 @@ import domain.Airline.Name;
 
 import java.util.UUID;
 
-public interface Repository
+public interface Repository extends domain.Repository<Airline>
 {
-    /**
-     * Store an airline (can be new or updated existing)
-     *
-     * @param airline The airline save
-     */
-    void store(Airline airline);
-
-    /**
-     * Fetch an airline by UUID.
-     * Will return null if no airline exists with this UUID
-     *
-     * @param uuid Airline identifier
-     *
-     * @return Airline|null
-     */
-    Airline fetch(UUID uuid);
-
     /**
      * Fetch an airline by name.
      * Will return null if no airline exists with this name

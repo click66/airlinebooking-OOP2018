@@ -1,37 +1,79 @@
 package domain.Airport;
 
-import cucumber.api.PendingException;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import domain.Airport.Service.UniqueNameCheck;
+import org.junit.Assert;
+
+import java.util.UUID;
 
 public class Stepdefs
 {
-    @Given("^an airport exists with the name (.*)$")
-    public void an_airport_exists_with_the_name(String name)
+    private Repository airportRepository;
+
+    private UniqueNameCheck uniqueNameCheckService;
+
+    private UUID uuid;
+
+    @Before
+    public void before()
     {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        airportRepository = new Repository();
+        uniqueNameCheckService = new UniqueNameCheck(airportRepository);
+        uuid = UUID.randomUUID();
+    }
+
+    @Given("^an airport exists with the name (.*)$")
+    public void an_airport_exists_with_the_name(String value)
+    {
+        airportRepository.store(
+            new Airport(UUID.randomUUID(), new Name(value))
+        );
     }
 
     @When("^I create an airport with the name (.*)$")
-    public void i_create_an_airport_with_the_name(String name)
+    public void i_create_an_airport_with_the_name(String value)
     {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        try {
+            Name name = new Name(value);
+            if (!uniqueNameCheckService.alreadyExistsByName(name)) {
+                airportRepository.store(
+                    new Airport(uuid, name)
+                );
+            }
+        } catch (Exception exception) {
+            // Ignore exception
+        }
     }
 
-    @Then("^an airport will exist with the name (.*)$")
-    public void an_airport_will_exist_with_the_name(String name)
+    @Then("^an airport called (.*) will exist$")
+    public void an_airport_called_will_exist(String value)
     {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        Name name = new Name(value);
+
+        Airport fetched = airportRepository.fetchByName(name);
+
+        Assert.assertNotNull(fetched);
+        Assert.assertEquals(name, fetched.getName());
+    }
+
+    @Then("^an airport called (.*) will not exist$")
+    public void an_airport_called_will_not_exist(String value)
+    {
+        Name name = new Name(value);
+
+        Airport fetched = airportRepository.fetchByName(name);
+
+        Assert.assertNull(fetched);
     }
 
     @Then("^it should fail to create the airport$")
     public void it_should_fail_to_create_the_airport()
     {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        Airport fetched = airportRepository.fetch(uuid);
+
+        Assert.assertNull(fetched);
     }
 }

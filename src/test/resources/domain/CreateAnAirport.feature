@@ -11,7 +11,7 @@ Feature: Create An Airport
 
   Scenario Outline: Create a valid airport
     When I create an airport with the name <name>
-    Then an airport will exist with the name <name>
+    Then an airport called <name> will exist
     Examples:
       | name |
       | DEN  |

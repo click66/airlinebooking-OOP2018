@@ -7,7 +7,7 @@ import java.util.UUID;
  *
  * @param <T>
  */
-public interface Repository<T>
+public interface Repository<T extends Identifiable>
 {
     /**
      * Store an object (can be new or updated existing)

@@ -9,17 +9,17 @@ import static org.junit.Assert.*;
 public class GUFITest
 {
     @Test
-    public void staticFactoryCreatesRandomUfid()
+    public void staticFactoryCreatesRandomGufi()
     {
-        GUFI randomGUFI = GUFI.randomUFID();
+        GUFI randomGUFI = GUFI.randomGUFI();
 
-        GUFI anotherRadomGUFI = GUFI.randomUFID();
+        GUFI anotherRadomGUFI = GUFI.randomGUFI();
 
         assertNotSame(randomGUFI, anotherRadomGUFI);
     }
 
     @Test
-    public void twoUfidsWithTheSameUuidAreEqual()
+    public void twoGufisWithTheSameUuidAreEqual()
     {
         UUID uuid = UUID.randomUUID();
 

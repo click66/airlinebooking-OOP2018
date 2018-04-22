@@ -25,7 +25,7 @@ public class GUFI
      *
      * @return GUFI
      */
-    public static GUFI randomUFID()
+    public static GUFI randomGUFI()
     {
         return new GUFI(UUID.randomUUID());
     }

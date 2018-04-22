@@ -6,7 +6,7 @@ Feature: Create A Flight
 
   Rules:
    - On a flight, originating and destination airports cannot be the same
-   - A flight has a UFID (Universal Flight Identifier)
+   - A flight has a GUFI (Globally Unique Flight Identifer)
 
   Scenario: Create a new flight
     Given airline SWEST has designation SW

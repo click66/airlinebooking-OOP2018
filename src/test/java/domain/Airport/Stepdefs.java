@@ -4,6 +4,8 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import domain.Airport.Repository.HashmapRepository;
+import domain.Airport.Repository.Repository;
 import domain.Airport.Service.UniqueNameCheck;
 import org.junit.Assert;
 
@@ -20,8 +22,9 @@ public class Stepdefs
     @Before
     public void before()
     {
-        airportRepository = new Repository();
+        airportRepository      = new HashmapRepository();
         uniqueNameCheckService = new UniqueNameCheck(airportRepository);
+
         uuid = UUID.randomUUID();
     }
 

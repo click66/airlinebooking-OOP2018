@@ -1,9 +1,12 @@
-package domain.Airport;
+package domain.Airport.Repository;
+
+import domain.Airport.Airport;
+import domain.Airport.Name;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Repository
+public class HashmapRepository implements Repository
 {
     private HashMap<UUID, Airport> airports = new HashMap<>();
 

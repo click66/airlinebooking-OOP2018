@@ -1,7 +1,7 @@
 package domain.Airport.Service;
 
 import domain.Airport.Name;
-import domain.Airport.Repository;
+import domain.Airport.Repository.Repository;
 
 /**
  * Domain service to check the uniquity of an Airport's name

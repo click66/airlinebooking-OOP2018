@@ -1,11 +1,13 @@
 package domain.Airline;
 
+import domain.Identifiable;
+
 import java.util.UUID;
 
 /**
  * "Airline" entity
  */
-public class Airline
+public class Airline implements Identifiable
 {
     private UUID uuid;
 

@@ -5,7 +5,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import domain.Airport.Repository.HashmapRepository;
+import domain.Airport.Repository.HashMapRepository;
 import domain.Airport.Repository.Repository;
 import org.junit.Assert;
 
@@ -22,7 +22,7 @@ public class Stepdefs
     @Before
     public void before()
     {
-        airportRepository = new HashmapRepository();
+        airportRepository = new HashMapRepository();
         airports          = new Airports(airportRepository);
 
         uuid = UUID.randomUUID();

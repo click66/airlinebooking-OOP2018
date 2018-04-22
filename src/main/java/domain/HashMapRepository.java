@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 public class HashMapRepository<T extends Identifiable> implements Repository<T>
 {
-    private HashMap<UUID, T> map = new HashMap<>();
+    protected HashMap<UUID, T> map = new HashMap<>();
 
     /**
      * Store an object (can be new or updated existing)

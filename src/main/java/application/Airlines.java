@@ -1,6 +1,7 @@
 package application;
 
 import domain.Airline.Airline;
+import domain.Airline.Designation;
 import domain.Airline.Name;
 import domain.Airline.Repository.Repository;
 
@@ -28,14 +29,15 @@ public class Airlines
      *
      * @param name The desired name
      */
-    public void registerNewAirline(Name name)
+    public void registerNewAirline(Name name, Designation designation)
     {
         Airline airline = new Airline(
             UUID.randomUUID(),
-            name
+            name,
+            designation
         );
 
-        if (repository.fetchByName(name) == null) {
+        if (repository.fetchByName(name) == null && repository.fetchByDesignation(designation) == null) {
             repository.store(airline);
         }
     }

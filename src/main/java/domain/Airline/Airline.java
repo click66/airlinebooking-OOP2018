@@ -13,15 +13,18 @@ public class Airline implements Identifiable
 
     private Name name;
 
+    private Designation designation;
+
     /**
      * "Airline" constructor
      *
      * @param name Airline name
      */
-    public Airline(UUID uuid, Name name)
+    public Airline(UUID uuid, Name name, Designation designation)
     {
         this.uuid = uuid;
         this.name = name;
+        this.designation = designation;
     }
 
     /**
@@ -42,5 +45,15 @@ public class Airline implements Identifiable
     public UUID getUuid()
     {
         return uuid;
+    }
+
+    /**
+     * Returns the designation of the airline
+     *
+     * @return Designation
+     */
+    public Designation getDesignation()
+    {
+        return designation;
     }
 }

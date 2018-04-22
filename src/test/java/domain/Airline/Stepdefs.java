@@ -32,7 +32,7 @@ public class Stepdefs
     public void an_airline_exists_with_the_name(String value)
     {
         airlineRepository.store(
-            new Airline(UUID.randomUUID(), new Name(value))
+            new Airline(UUID.randomUUID(), new Name(value), new Designation("SW"))
         );
     }
 
@@ -40,7 +40,7 @@ public class Stepdefs
     public void i_create_an_airline_with_the_name(String value)
     {
         try {
-           airlines.registerNewAirline(new Name(value));
+           airlines.registerNewAirline(new Name(value), new Designation("SW"));
         } catch (Exception exception) {
 //             Ignore exception
         }

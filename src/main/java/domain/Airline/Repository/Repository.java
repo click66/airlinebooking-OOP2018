@@ -1,9 +1,8 @@
 package domain.Airline.Repository;
 
 import domain.Airline.Airline;
+import domain.Airline.Designation;
 import domain.Airline.Name;
-
-import java.util.UUID;
 
 public interface Repository extends domain.Repository<Airline>
 {
@@ -15,4 +14,13 @@ public interface Repository extends domain.Repository<Airline>
      * @return Airline|null
      */
     Airline fetchByName(Name name);
+
+    /**
+     * Fetch an airline by designation.
+     * Will return null if no airline exists with this designation
+     *
+     * @param designation Airline designation
+     * @return Airline|null
+     */
+    Airline fetchByDesignation(Designation designation);
 }

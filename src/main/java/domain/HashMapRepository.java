@@ -12,24 +12,13 @@ public class HashMapRepository<T extends Identifiable> implements Repository<T>
 {
     protected HashMap<UUID, T> map = new HashMap<>();
 
-    /**
-     * Store an object (can be new or updated existing)
-     *
-     * @param object The object to store save
-     */
+    @Override
     public void store(T object)
     {
         map.put(object.getUuid(), object);
     }
 
-    /**
-     * Fetch an object by UUID.
-     * Will return null if no identifiable object exists with this UUID
-     *
-     * @param uuid T identifier
-     *
-     * @return T|null
-     */
+    @Override
     public T fetch(UUID uuid)
     {
         return map.get(uuid);

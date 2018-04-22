@@ -5,13 +5,7 @@ import domain.Airport.Name;
 
 public class HashMapRepository extends domain.HashMapRepository<Airport> implements Repository
 {
-    /**
-     * Fetch an airport by name.
-     * Will return null if no airport exists with this name
-     *
-     * @param name Airport name
-     * @return Airport|null
-     */
+    @Override
     public Airport fetchByName(Name name)
     {
         for (Airport airport : map.values()) {

@@ -3,8 +3,6 @@ package domain.Airport.Repository;
 import domain.Airport.Airport;
 import domain.Airport.Name;
 
-import java.util.UUID;
-
 public interface Repository extends domain.Repository<Airport>
 {
     /**

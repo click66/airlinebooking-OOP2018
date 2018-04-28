@@ -1,6 +1,6 @@
 package domain.Airline;
 
-import domain.exception.InvalidArgument;
+import domain.Exception.InvalidArgument;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

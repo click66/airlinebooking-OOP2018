@@ -1,7 +1,7 @@
 package domain.Flight;
 
 import domain.Airport.Airport;
-import domain.exception.InvalidArgument;
+import domain.Exception.InvalidArgument;
 
 public class Route
 {

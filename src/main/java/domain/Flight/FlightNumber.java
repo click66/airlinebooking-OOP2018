@@ -1,7 +1,7 @@
 package domain.Flight;
 
 import domain.Airline.Designation;
-import domain.exception.InvalidArgument;
+import domain.Exception.InvalidArgument;
 
 /**
  * "Flight number" value object

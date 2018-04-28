@@ -1,4 +1,4 @@
-package domain.exception;
+package domain.Exception;
 
 /**
  * Exception asserting a specified value violated a uniqueness constraint

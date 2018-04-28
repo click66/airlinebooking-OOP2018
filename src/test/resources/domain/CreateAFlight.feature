@@ -10,12 +10,12 @@ Feature: Create A Flight
 
   Scenario: Create a new flight
     Given airline SWEST has designation SW
-    When I create flight 1234 under airline SWEST
+    When I create flight 1234 under airline SWEST for 01/01/2018
     Then a flight with flight no. SW1234 will exist
 
   Scenario: Create a flight with an invalid number
     Given airline SWEST has designation SW
-    When I create flight 12345 under airline SWEST
+    When I create flight 12345 under airline SWEST for 01/01/2018
     Then it should fail to create the flight
 
   Scenario: Create a flight with a duplicate flight number, on the same day (invalid)
@@ -24,7 +24,7 @@ Feature: Create A Flight
     And I create flight 1234 under airline SWEST for 01/01/2018
     Then it should fail to create the flight
 
-  Scenario: Creae a flight with a duplicate flight number, on different days (valid)
+  Scenario: Create a flight with a duplicate flight number, on different days (valid)
     Given airline SWEST has designation SW
     When I create flight 1234 under airline SWEST for 01/01/2018
     And I create flight 1234 under airline SWEST for 02/01/2018

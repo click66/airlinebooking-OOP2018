@@ -37,7 +37,7 @@ public class Stepdefs
         try {
             airportRepository.store(new Airport(airportRepository, uuid, new Name(value)));
         } catch (Exception exception) {
-            // Ignore exception
+            // Ignore Exception
         }
     }
 
@@ -62,7 +62,7 @@ public class Stepdefs
 
             Assert.assertNull(fetched);
         } catch (Exception exception) {
-            // Ignore exception
+            // Ignore Exception
         }
     }
 

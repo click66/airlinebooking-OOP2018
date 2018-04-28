@@ -30,6 +30,16 @@ public class GUFI
         return new GUFI(UUID.randomUUID());
     }
 
+    /**
+     * UUID accessor
+     *
+     * @return UUID
+     */
+    public UUID getUuid()
+    {
+        return uuid;
+    }
+
     @Override
     public boolean equals(Object obj)
     {

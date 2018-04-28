@@ -1,6 +1,6 @@
 package domain.Airline;
 
-import domain.exception.InvalidArgument;
+import domain.Exception.InvalidArgument;
 
 /**
  * "Airline Name" value object

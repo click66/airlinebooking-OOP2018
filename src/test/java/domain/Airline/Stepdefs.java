@@ -1,6 +1,5 @@
 package domain.Airline;
 
-import application.Airlines;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -38,7 +37,7 @@ public class Stepdefs
         try {
            airlineRepository.store(new Airline(airlineRepository, uuid, new Name(value), new Designation("SW")));
         } catch (Exception exception) {
-//             Ignore exception
+//             Ignore Exception
         }
     }
 
@@ -63,7 +62,7 @@ public class Stepdefs
 
             Assert.assertNull(fetched);
         } catch (Exception exception) {
-            // Ignore exception
+            // Ignore Exception
         }
     }
 

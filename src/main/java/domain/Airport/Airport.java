@@ -1,7 +1,7 @@
 package domain.Airport;
 
 import domain.Identifiable;
-import domain.exception.ValueNotUnique;
+import domain.Exception.ValueNotUnique;
 
 import java.util.UUID;
 

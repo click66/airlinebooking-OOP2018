@@ -13,7 +13,7 @@ public class Route
      */
     public Route(Airport origin, Airport destination)
     {
-        if (origin == destination || origin.equals(destination)) {
+        if (origin.getUuid() == destination.getUuid()) {
             throw new InvalidArgument("The origin and destination airports cannot be the samde");
         }
     }

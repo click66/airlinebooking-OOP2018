@@ -1,4 +1,4 @@
-package domain.Flight;
+package domain.Flight.FlightNumber;
 
 import domain.Airline.Designation;
 import domain.Exception.InvalidArgument;
@@ -27,5 +27,19 @@ public class FlightNumber
     public String toString()
     {
         return airlineDesignation.toString().concat(number.toString());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        return obj instanceof FlightNumber
+            && airlineDesignation.equals(((FlightNumber) obj).airlineDesignation)
+            && number.equals(((FlightNumber) obj).number);
     }
 }

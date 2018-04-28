@@ -13,7 +13,12 @@ import java.util.UUID;
  */
 public class HashMapRepository<T extends Identifiable> implements Repository<T>
 {
-    protected HashMap<UUID, T> map = new HashMap<>();
+    private HashMap<UUID, T> map;
+
+    public HashMapRepository(HashMap<UUID, T> map)
+    {
+        this.map = map;
+    }
 
     @Override
     public void store(T object)

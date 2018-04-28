@@ -5,6 +5,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -18,7 +19,7 @@ public class HashMapRepositoryTest
     {
         UUID uuid = UUID.randomUUID();
 
-        HashMapRepository hashMapRepository = new HashMapRepository();
+        HashMapRepository hashMapRepository = new HashMapRepository(new HashMap<UUID, Identifiable>());
 
         Identifiable object = context.mock(Identifiable.class);
 

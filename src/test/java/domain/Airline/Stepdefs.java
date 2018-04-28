@@ -7,6 +7,7 @@ import cucumber.api.java.en.When;
 import application.Repository.AirlineRepository;
 import org.junit.Assert;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Stepdefs
@@ -18,7 +19,7 @@ public class Stepdefs
     @Before
     public void before()
     {
-        airlineRepository = new AirlineRepository();
+        airlineRepository = new AirlineRepository(new HashMap<>());
 
         uuid = UUID.randomUUID();
     }

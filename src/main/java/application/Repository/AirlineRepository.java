@@ -5,8 +5,20 @@ import domain.Airline.Designation;
 import domain.Airline.Name;
 import domain.Airline.Repository;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class AirlineRepository extends HashMapRepository<Airline> implements Repository
 {
+    private HashMap<UUID, Airline> map;
+
+    public AirlineRepository(HashMap<UUID, Airline> map)
+    {
+        super(map);
+
+        this.map = map;
+    }
+
     @Override
     public Airline fetchByName(Name name)
     {

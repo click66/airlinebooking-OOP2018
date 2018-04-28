@@ -28,15 +28,17 @@ Feature: Create A Flight
     Given airline SWEST has designation SW
     When I create flight 1234 under airline SWEST for 01/01/2018
     And I create flight 1234 under airline SWEST for 02/01/2018
-    Then two flights with flight no. SW1234 will exist
+    Then it should successfully create the flight
+    And 2 flights with flight no. SW1234 will exist
 
   Scenario: Create a new flight between two airports
-    Given a flight can fly between airports LGW and LAX
+    Given LGW is an airport
+    And LAX is an airport
     When I create flight 1234 between LGW and LAX
-    Then a flight is registered to fly between LGW and LAX
+    Then it should successfully create the flight
 
   Scenario: Create a flight between the same two airports
-    Given a flight can fly between airports LGW and LAX
+    Given LGW is an airport
     When I create flight 1234 between LGW and LGW
     Then it should fail to create the flight
 

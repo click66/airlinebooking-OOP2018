@@ -14,7 +14,7 @@ public class Route
     public Route(Airport origin, Airport destination)
     {
         if (origin.getUuid() == destination.getUuid()) {
-            throw new InvalidArgument("The origin and destination airports cannot be the samde");
+            throw new InvalidArgument("The origin and destination airports cannot be the same");
         }
     }
 }

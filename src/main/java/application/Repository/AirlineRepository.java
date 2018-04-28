@@ -1,14 +1,11 @@
-package domain.Airline.Repository;
+package application.Repository;
 
 import domain.Airline.Airline;
 import domain.Airline.Designation;
 import domain.Airline.Name;
-import domain.Airport.Airport;
+import domain.Airline.Repository;
 
-import java.util.HashMap;
-import java.util.UUID;
-
-public class HashMapRepository extends domain.HashMapRepository<Airline> implements Repository
+public class AirlineRepository extends HashMapRepository<Airline> implements Repository
 {
     @Override
     public Airline fetchByName(Name name)

@@ -1,20 +1,16 @@
 package domain.Airport;
 
-import application.Airports;
+import application.Repository.AirportRepository;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import domain.Airport.Repository.HashMapRepository;
-import domain.Airport.Repository.Repository;
 import org.junit.Assert;
 
 import java.util.UUID;
 
 public class Stepdefs
 {
-    private Airports airports;
-
     private Repository airportRepository;
 
     private UUID uuid;
@@ -22,8 +18,7 @@ public class Stepdefs
     @Before
     public void before()
     {
-        airportRepository = new HashMapRepository();
-        airports          = new Airports(airportRepository);
+        airportRepository = new AirportRepository();
 
         uuid = UUID.randomUUID();
     }
@@ -32,7 +27,7 @@ public class Stepdefs
     public void an_airport_exists_with_the_name(String value)
     {
         airportRepository.store(
-            new Airport(UUID.randomUUID(), new Name(value))
+            new Airport(airportRepository, UUID.randomUUID(), new Name(value))
         );
     }
 
@@ -40,7 +35,7 @@ public class Stepdefs
     public void i_create_an_airport_with_the_name(String value)
     {
         try {
-            airports.registerNewAirport(new Name(value));
+            airportRepository.store(new Airport(airportRepository, uuid, new Name(value)));
         } catch (Exception exception) {
             // Ignore exception
         }

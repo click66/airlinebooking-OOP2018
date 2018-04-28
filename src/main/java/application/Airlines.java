@@ -3,7 +3,7 @@ package application;
 import domain.Airline.Airline;
 import domain.Airline.Designation;
 import domain.Airline.Name;
-import domain.Airline.Repository.Repository;
+import domain.Airline.Repository;
 
 import java.util.UUID;
 
@@ -32,13 +32,12 @@ public class Airlines
     public void registerNewAirline(Name name, Designation designation)
     {
         Airline airline = new Airline(
+            repository,
             UUID.randomUUID(),
             name,
             designation
         );
 
-        if (repository.fetchByName(name) == null && repository.fetchByDesignation(designation) == null) {
-            repository.store(airline);
-        }
+        repository.store(airline);
     }
 }

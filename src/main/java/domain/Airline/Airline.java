@@ -1,11 +1,12 @@
 package domain.Airline;
 
 import domain.Identifiable;
+import domain.exception.ValueNotUnique;
 
 import java.util.UUID;
 
 /**
- * "Airline" entity
+ * "Airline" aggregate root entity
  */
 public class Airline implements Identifiable
 {
@@ -18,10 +19,21 @@ public class Airline implements Identifiable
     /**
      * "Airline" constructor
      *
-     * @param name Airline name
+     * @param repository
+     * @param uuid
+     * @param name
+     * @param designation
      */
-    public Airline(UUID uuid, Name name, Designation designation)
+    public Airline(Repository repository, UUID uuid, Name name, Designation designation)
     {
+        if (repository.fetchByName(name) != null) {
+            throw new ValueNotUnique("The name provided for this Airline was not unique");
+        }
+
+        if (repository.fetchByDesignation(designation) != null) {
+            throw new ValueNotUnique("The designation provided for this Airline was not unique");
+        }
+
         this.uuid = uuid;
         this.name = name;
         this.designation = designation;

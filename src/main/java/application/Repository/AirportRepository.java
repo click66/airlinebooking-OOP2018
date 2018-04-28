@@ -1,9 +1,10 @@
-package domain.Airport.Repository;
+package application.Repository;
 
 import domain.Airport.Airport;
 import domain.Airport.Name;
+import domain.Airport.Repository;
 
-public class HashMapRepository extends domain.HashMapRepository<Airport> implements Repository
+public class AirportRepository extends application.Repository.HashMapRepository<Airport> implements Repository
 {
     @Override
     public Airport fetchByName(Name name)

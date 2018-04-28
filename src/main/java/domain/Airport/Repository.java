@@ -1,7 +1,4 @@
-package domain.Airport.Repository;
-
-import domain.Airport.Airport;
-import domain.Airport.Name;
+package domain.Airport;
 
 public interface Repository extends domain.Repository<Airport>
 {

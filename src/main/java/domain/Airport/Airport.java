@@ -1,11 +1,12 @@
 package domain.Airport;
 
 import domain.Identifiable;
+import domain.exception.ValueNotUnique;
 
 import java.util.UUID;
 
 /**
- * "Airport" entity
+ * "Airport" aggregate root entity
  */
 public class Airport implements Identifiable
 {
@@ -16,10 +17,16 @@ public class Airport implements Identifiable
     /**
      * "Airport" constructor
      *
-     * @param name Airport name
+     * @param repository
+     * @param uuid
+     * @param name
      */
-    public Airport(UUID uuid, Name name)
+    public Airport(Repository repository, UUID uuid, Name name)
     {
+        if (repository.fetchByName(name) != null) {
+            throw new ValueNotUnique("The name provided for this Airport was not unique");
+        }
+
         this.uuid = uuid;
         this.name = name;
     }

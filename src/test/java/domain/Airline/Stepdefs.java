@@ -5,16 +5,13 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import domain.Airline.Repository.HashMapRepository;
-import domain.Airline.Repository.Repository;
+import application.Repository.AirlineRepository;
 import org.junit.Assert;
 
 import java.util.UUID;
 
 public class Stepdefs
 {
-    private Airlines airlines;
-
     private Repository airlineRepository;
 
     private UUID uuid;
@@ -22,8 +19,7 @@ public class Stepdefs
     @Before
     public void before()
     {
-        airlineRepository = new HashMapRepository();
-        airlines          = new Airlines(airlineRepository);
+        airlineRepository = new AirlineRepository();
 
         uuid = UUID.randomUUID();
     }
@@ -32,7 +28,7 @@ public class Stepdefs
     public void an_airline_exists_with_the_name(String value)
     {
         airlineRepository.store(
-            new Airline(UUID.randomUUID(), new Name(value), new Designation("SW"))
+            new Airline(airlineRepository, UUID.randomUUID(), new Name(value), new Designation("SW"))
         );
     }
 
@@ -40,7 +36,7 @@ public class Stepdefs
     public void i_create_an_airline_with_the_name(String value)
     {
         try {
-           airlines.registerNewAirline(new Name(value), new Designation("SW"));
+           airlineRepository.store(new Airline(airlineRepository, uuid, new Name(value), new Designation("SW")));
         } catch (Exception exception) {
 //             Ignore exception
         }

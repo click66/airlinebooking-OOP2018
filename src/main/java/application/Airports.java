@@ -2,7 +2,7 @@ package application;
 
 import domain.Airport.Airport;
 import domain.Airport.Name;
-import domain.Airport.Repository.Repository;
+import domain.Airport.Repository;
 
 import java.util.UUID;
 
@@ -31,12 +31,11 @@ public class Airports
     public void registerNewAirport(Name name)
     {
         Airport airport = new Airport(
+            this.repository,
             UUID.randomUUID(),
             name
         );
 
-        if (repository.fetchByName(name) == null) {
-            repository.store(airport);
-        }
+        repository.store(airport);
     }
 }

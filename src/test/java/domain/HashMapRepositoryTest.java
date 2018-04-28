@@ -1,5 +1,6 @@
 package domain;
 
+import application.Repository.HashMapRepository;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;

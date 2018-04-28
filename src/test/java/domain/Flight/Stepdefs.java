@@ -1,18 +1,10 @@
 package domain.Flight;
 
-import application.Airports;
 import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import domain.Airport.Airport;
-import domain.Airport.Name;
-import domain.Airport.Repository.HashMapRepository;
-import domain.Airport.Repository.Repository;
-import org.junit.Assert;
-
-import java.util.UUID;
 
 public class Stepdefs
 {

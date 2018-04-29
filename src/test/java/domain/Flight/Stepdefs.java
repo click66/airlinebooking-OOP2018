@@ -158,7 +158,7 @@ public class Stepdefs
     }
 
     @When("^I create a section of class (.*), with (\\d+) rows and (\\d+) columns, on flight (.*)$")
-    public void i_create_section_of_class_with_rows_and_columns_on_flight(String sectionClass, Integer rows, Integer columns, String flightNumber)
+    public void i_create_section_of_class_with_rows_and_columns_on_flight(String sectionClass, int rows, int columns, String flightNumber)
     {
         Flight flight = flights.get(flightNumber);
 
@@ -215,11 +215,11 @@ public class Stepdefs
     }
 
     @Then("^flight (.*) should contain (\\d+) sections$")
-    public void flight_should_contain_sections(String flightNumber, Integer sections)
+    public void flight_should_contain_sections(String flightNumber, int sections)
     {
         Flight flight = flights.get(flightNumber);
 
-        Assert.assertEquals(sections, flight.countSections());
+        Assert.assertEquals((Integer)sections, flight.countSections());
     }
 
     @Then("^the created section should have (\\d+) seats$")

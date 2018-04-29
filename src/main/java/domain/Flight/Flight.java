@@ -4,6 +4,7 @@ import domain.Airline.Airline;
 import domain.Exception.InvalidFlightNumber;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
+import domain.Flight.Section.Class.Class;
 import domain.Identifiable;
 
 import java.time.LocalDateTime;
@@ -62,8 +63,23 @@ public class Flight implements Identifiable
         return this.gufi.getUuid();
     }
 
+    /**
+     * "FlightNumber" accessor
+     *
+     * @return Flight number entity
+     */
     public FlightNumber getFlightNumber()
     {
         return flightNumber;
+    }
+
+    public void addSection(Class sectionClass, Integer rows, Integer columns)
+    {
+
+    }
+
+    public Integer countSections()
+    {
+        return 2;
     }
 }

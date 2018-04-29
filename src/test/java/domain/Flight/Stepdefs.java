@@ -9,11 +9,14 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import domain.Airline.Airline;
-import domain.Airline.Designation;
-import domain.Airline.Name;
 import domain.Airport.Airport;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
+import domain.Flight.Section.Class.Business;
+import domain.Flight.Section.Class.Class;
+import domain.Flight.Section.Class.Economy;
+import domain.Flight.Section.Class.First;
+import domain.Flight.Section.Section;
 import domain.Repository;
 import org.junit.Assert;
 
@@ -37,6 +40,8 @@ public class Stepdefs
 
     private HashMap<String, Airline> airlines;
     private HashMap<String, Airport> airports;
+    private HashMap<String, Flight> flights;
+    private ArrayList<Section> sections;
 
     private Registrar flightNumberRegistrar;
 
@@ -53,6 +58,8 @@ public class Stepdefs
 
         airlines = new HashMap<>();
         airports = new HashMap<>();
+        flights  = new HashMap<>();
+        sections = new ArrayList<Section>();
 
         flightNumberRegistrar = new Registrar(new HashMap<>());
     }
@@ -60,31 +67,44 @@ public class Stepdefs
     @Given("^airline (.*) has designation (.*)$")
     public void airline_has_designation(String airlineName, String airlineDesignation)
     {
-        airlines.put(airlineName, new Airline(
-            airlineRepository,
-            UUID.randomUUID(),
-            new domain.Airline.Name(airlineName),
-            new domain.Airline.Designation(airlineDesignation)
-        ));
+        makeAirline(airlineName, airlineDesignation);
     }
 
     @Given("^(.*) is an airport$")
     public void is_an_airport(String airportName)
     {
-        airports.put(airportName, new Airport(
-            airportRepository,
-            UUID.randomUUID(),
-            new domain.Airport.Name(airportName)
-        ));
+        makeAirport(airportName);
+    }
+
+    @Given("^flight (.*) exists$")
+    public void flight_exists(String flightNumber)
+    {
+        String airlineDesignation = flightNumber.substring(0, 2);
+        int number                = Integer.parseInt(flightNumber.substring(3));
+
+        Airline airline     = makeAirline(airlineDesignation, airlineDesignation);
+        Airport origin      = makeAirport("LAX");
+        Airport destination = makeAirport("LGW");
+
+        Flight flight = new Flight(
+            flightNumberRegistrar,
+            airline,
+            new Route(origin, destination),
+            new FlightNumber(new domain.Airline.Designation(airlineDesignation), number),
+            GUFI.randomGUFI(),
+            LocalDateTime.now()
+        );
+
+        flightRepository.store(flight);
+        flights.put(flight.getFlightNumber().toString(), flight);
     }
 
     @When("^I create flight (\\d+) under airline (.*) for (.*)/(.*)/(.*)$")
     public void i_create_flight_under_airline(int number, String airlineName, String date, String month, String year)
     {
-        Airline airline = airlines.get(airlineName);
-
-        Airport origin = new Airport(airportRepository, UUID.randomUUID(), new domain.Airport.Name("LGW"));
-        Airport destination = new Airport(airportRepository, UUID.randomUUID(), new domain.Airport.Name("LAX"));
+        Airline airline     = airlines.get(airlineName);
+        Airport origin      = makeAirport("LGW");
+        Airport destination = makeAirport("LAX");
 
         UUID toCreate = UUID.randomUUID();
         created.add(toCreate);
@@ -107,18 +127,11 @@ public class Stepdefs
         }
     }
 
-    @When("^I create flight (\\d+) between (.*) and (.*)")
+    @When("^I create flight (\\d+) between (.*) and (.*)$")
     public void i_create_flight_between(int number, String origAirportName, String destAirportName)
     {
-        Airline airline = new Airline(
-            airlineRepository,
-            UUID.randomUUID(),
-            new Name("SWEST"),
-            new Designation("SW")
-        );
-
-        Airport origin = airports.get(origAirportName);
-
+        Airline airline     = makeAirline("SWEST", "SW");
+        Airport origin      = airports.get(origAirportName);
         Airport destination = airports.get(destAirportName);
 
         UUID toCreate = UUID.randomUUID();
@@ -136,6 +149,14 @@ public class Stepdefs
         } catch (Exception exception) {
             // Suppress exception
         }
+    }
+
+    @When("^I create a section of class (.*), with (\\d+) rows and (\\d+) columns, on flight (.*)$")
+    public void i_create_section_of_class_with_rows_and_columns_on_flight(String sectionClass, Integer rows, Integer columns, String flightNumber)
+    {
+        Flight flight = flights.get(flightNumber);
+
+        flight.addSection(getSectionClass(sectionClass), rows, columns);
     }
 
     @Then("^a flight with flight no\\. (.*) will exist$")
@@ -177,5 +198,90 @@ public class Stepdefs
     public void it_should_successfully_create_the_flight()
     {
         Assert.assertEquals(created.size(), flightHashMap.size());
+    }
+
+    @Then("^flight (.*) should contain (\\d+) sections$")
+    public void flight_should_contain_sections(String flightNumber, int sections)
+    {
+        Flight flight = flights.get(flightNumber);
+
+        Assert.assertEquals((Integer)sections, flight.countSections());
+    }
+
+    @Then("^the created section should have (\\d+) seats$")
+    public void the_created_section_should_have_seats(int seatCount)
+    {
+        Section lastAdded = sections.get(sections.size() - 1);
+
+        Assert.assertEquals((Integer)seatCount, lastAdded.countSeats());
+    }
+
+    @Then("^it should fail to create the section$")
+    public void it_should_fail_to_create_the_section()
+    {
+        Assert.assertEquals(0, sections.size());
+    }
+
+    /**
+     * Build an airport for use in preconditions
+     *
+     * @param name Airport name
+     *
+     * @return Airport
+     */
+    private Airport makeAirport(String name)
+    {
+        Airport airport = new Airport(
+            airportRepository,
+            UUID.randomUUID(),
+            new domain.Airport.Name(name)
+        );
+
+        airports.put(name, airport);
+
+        return airport;
+    }
+
+    /**
+     * Build an airline for use in preconditions
+     *
+     * @param name        Airline name
+     * @param designation Airline designation
+     *
+     * @return Airline
+     */
+    private Airline makeAirline(String name, String designation)
+    {
+        Airline airline = new Airline(
+            airlineRepository,
+            UUID.randomUUID(),
+            new domain.Airline.Name(name),
+            new domain.Airline.Designation(designation)
+        );
+
+        airlines.put(name, airline);
+
+        return airline;
+    }
+
+    /**
+     * Get the class by for the provided string
+     *
+     * @param sectionClass String representing class
+     *
+     * @return Class object
+     */
+    private Class getSectionClass(String sectionClass)
+    {
+        switch (sectionClass) {
+            case "Economy":
+                return new Economy();
+            case "Business":
+                return new Business();
+            case "First":
+                return new First();
+        }
+
+        return null;
     }
 }

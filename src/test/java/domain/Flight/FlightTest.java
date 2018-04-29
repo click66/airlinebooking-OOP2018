@@ -4,8 +4,11 @@ import domain.Airline.Airline;
 import domain.Airport.Airport;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
+import domain.Flight.Section.Class.Class;
+import domain.Flight.Section.Section;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -37,6 +40,36 @@ public class FlightTest
         assertSame(uuid, sut.getUuid());
     }
 
+    @Test
+    public void canAddAndCountSections()
+    {
+        Airline airline = makeTestAirline();
+
+        Flight sut = new Flight(
+            new Registrar(new HashMap<>()),
+            airline,
+            new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
+            new FlightNumber(airline.getDesignation(), 1234),
+            GUFI.randomGUFI(),
+            LocalDateTime.now()
+        );
+
+        Assert.assertEquals((Integer)0, sut.countSections());
+
+        sut.addSection(context.mock(Class.class), 1, 1);
+
+        Assert.assertEquals((Integer)1, sut.countSections());
+
+        sut.addSection(context.mock(Class.class), 1, 1);
+
+        Assert.assertEquals((Integer)2, sut.countSections());
+    }
+
+    /**
+     * Make a test airline
+     *
+     * @return Test airline
+     */
     private Airline makeTestAirline()
     {
         domain.Airline.Name name = new domain.Airline.Name("SWEST");
@@ -60,6 +93,13 @@ public class FlightTest
         );
     }
 
+    /**
+     * Make a test airport
+     *
+     * @param name Airport name
+     *
+     * @return Test airport
+     */
     private Airport makeTestAirport(String name)
     {
         domain.Airport.Name airportName = new domain.Airport.Name(name);

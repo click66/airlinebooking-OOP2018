@@ -41,4 +41,3 @@ Feature: Create A Flight
     Given LGW is an airport
     When I create flight 1234 between LGW and LGW
     Then it should fail to create the flight
-

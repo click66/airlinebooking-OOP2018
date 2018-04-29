@@ -153,7 +153,7 @@ public class Stepdefs
                 sections
             ));
         } catch (Exception exception) {
-            // Suppress exception
+            // Ignore exception
         }
     }
 
@@ -162,7 +162,11 @@ public class Stepdefs
     {
         Flight flight = flights.get(flightNumber);
 
-        flight.addSection(getSectionClass(sectionClass), rows, columns);
+        try {
+            flight.addSection(getSectionClass(sectionClass), rows, columns);
+        } catch (Exception exception) {
+            // Ignore exception
+        }
 
         lastAddedSectionKey = getSectionClass(sectionClass).getKey();
         expectedSectionCount++;

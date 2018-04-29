@@ -44,30 +44,23 @@ Feature: Create A Section For A Flight
     When I create a section of class Economy, with 2 rows and 0 columns, on flight JT123
     Then it should fail to create the section
 
-  Scenario Outline: Create a flight section with exactly 100 seats
+  Scenario: Create a flight section with exactly 1000 seats
     Given flight JT123 exists
-    When I create a section of class Economy, with <rows> rows and <columns> columns, on flight JT123
+    When I create a section of class Economy, with 100 rows and 10 columns, on flight JT123
     Then flight JT123 should contain 1 sections
-    And the created section should have 100 seats
-    Examples:
-      | rows | columns |
-      | 1    | 100     |
-      | 100  | 1       |
-      | 2    | 50      |
-      | 50   | 2       |
-      | 20   | 5       |
-      | 5    | 20      |
-      | 10   | 10      |
+    And the created section should have 1000 seats
 
-  Scenario Outline: Create a flight section with more than 100 seats
+  Scenario: Create a flight section with more than 1000 seats
     Given flight JT123 exists
-    When I create a section of class Economy, with <rows> rows and <columns> columns, on flight JT123
+    When I create a section of class Economy, with 101 rows and 11 columns, on flight JT123
     Then it should fail to create the section
-    Examples:
-      | rows | columns |
-      | 1    | 101     |
-      | 101  | 1       |
-      | 2    | 51      |
-      | 51   | 2       |
-      | 21   | 5       |
-      | 5    | 21      |
+
+  Scenario: Create a flight section with too many rows
+    Given flight JT123 exists
+    When I create a section of class Economy, with 101 rows and 1 columns, on flight JT123
+    Then it should fail to create the section
+
+  Scenario: Create a flight section with too many columns
+    Given flight JT123 exists
+    When I create a section of class Economy, with 1 rows and 11 columns, on flight JT123
+    Then it should fail to create the section

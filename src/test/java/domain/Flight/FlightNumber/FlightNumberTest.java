@@ -2,7 +2,6 @@ package domain.Flight.FlightNumber;
 
 import domain.Airline.Designation;
 import domain.Exception.InvalidArgument;
-import domain.Flight.FlightNumber.FlightNumber;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

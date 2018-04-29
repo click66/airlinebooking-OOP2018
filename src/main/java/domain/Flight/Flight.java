@@ -82,7 +82,7 @@ public class Flight implements Identifiable
 
     public void addSection(Class sectionClass, Integer rows, Integer columns)
     {
-        sections.put(sectionClass.getKey(), new Section());
+        sections.put(sectionClass.getKey(), Section.ofRowsAndColumns(rows, columns));
     }
 
     public Integer countSections()

@@ -4,6 +4,7 @@ import application.Repository.AirlineRepository;
 import application.Repository.AirportRepository;
 
 import application.Repository.HashMapRepository;
+import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -37,11 +38,13 @@ public class Stepdefs
     private Repository<Flight> flightRepository;
 
     private ArrayList<UUID> created;
+    private Integer expectedSectionCount = 0;
+    private String lastAddedSectionKey;
 
     private HashMap<String, Airline> airlines;
     private HashMap<String, Airport> airports;
     private HashMap<String, Flight> flights;
-    private ArrayList<Section> sections;
+    private HashMap<String, Section> sections;
 
     private Registrar flightNumberRegistrar;
 
@@ -59,7 +62,7 @@ public class Stepdefs
         airlines = new HashMap<>();
         airports = new HashMap<>();
         flights  = new HashMap<>();
-        sections = new ArrayList<Section>();
+        sections = new HashMap<>();
 
         flightNumberRegistrar = new Registrar(new HashMap<>());
     }
@@ -80,7 +83,7 @@ public class Stepdefs
     public void flight_exists(String flightNumber)
     {
         String airlineDesignation = flightNumber.substring(0, 2);
-        int number                = Integer.parseInt(flightNumber.substring(3));
+        int number                = Integer.parseInt(flightNumber.substring(2));
 
         Airline airline     = makeAirline(airlineDesignation, airlineDesignation);
         Airport origin      = makeAirport("LAX");
@@ -92,7 +95,8 @@ public class Stepdefs
             new Route(origin, destination),
             new FlightNumber(new domain.Airline.Designation(airlineDesignation), number),
             GUFI.randomGUFI(),
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            sections
         );
 
         flightRepository.store(flight);
@@ -120,7 +124,8 @@ public class Stepdefs
                     Integer.parseInt(year),
                     Integer.parseInt(month),
                     Integer.parseInt(date)
-                ), LocalTime.now())
+                ), LocalTime.now()),
+                sections
             ));
         } catch (Exception exception) {
             // Suppress exception
@@ -144,7 +149,8 @@ public class Stepdefs
                 new Route(origin, destination),
                 new FlightNumber(airline.getDesignation(), number),
                 new GUFI(toCreate),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                sections
             ));
         } catch (Exception exception) {
             // Suppress exception
@@ -157,6 +163,10 @@ public class Stepdefs
         Flight flight = flights.get(flightNumber);
 
         flight.addSection(getSectionClass(sectionClass), rows, columns);
+
+        lastAddedSectionKey = getSectionClass(sectionClass).getKey();
+        expectedSectionCount++;
+
     }
 
     @Then("^a flight with flight no\\. (.*) will exist$")
@@ -201,25 +211,25 @@ public class Stepdefs
     }
 
     @Then("^flight (.*) should contain (\\d+) sections$")
-    public void flight_should_contain_sections(String flightNumber, int sections)
+    public void flight_should_contain_sections(String flightNumber, Integer sections)
     {
         Flight flight = flights.get(flightNumber);
 
-        Assert.assertEquals((Integer)sections, flight.countSections());
+        Assert.assertEquals(sections, flight.countSections());
     }
 
     @Then("^the created section should have (\\d+) seats$")
-    public void the_created_section_should_have_seats(int seatCount)
+    public void the_created_section_should_have_seats(Integer seatCount)
     {
-        Section lastAdded = sections.get(sections.size() - 1);
+        Section lastAdded = sections.get(lastAddedSectionKey);
 
-        Assert.assertEquals((Integer)seatCount, lastAdded.countSeats());
+        Assert.assertEquals(seatCount, lastAdded.countSeats());
     }
 
     @Then("^it should fail to create the section$")
     public void it_should_fail_to_create_the_section()
     {
-        Assert.assertEquals(0, sections.size());
+        Assert.assertNotEquals(expectedSectionCount, (Integer)sections.size());
     }
 
     /**
@@ -282,6 +292,6 @@ public class Stepdefs
                 return new First();
         }
 
-        return null;
+        throw new PendingException("No test routine for this class (yet)");
     }
 }

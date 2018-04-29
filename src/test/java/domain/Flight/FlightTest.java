@@ -5,7 +5,6 @@ import domain.Airport.Airport;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
 import domain.Flight.Section.Class.Class;
-import domain.Flight.Section.Section;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
@@ -34,7 +33,8 @@ public class FlightTest
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
             new FlightNumber(airline.getDesignation(), 1234),
             new GUFI(uuid),
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            new HashMap<>()
         );
 
         assertSame(uuid, sut.getUuid());
@@ -43,6 +43,18 @@ public class FlightTest
     @Test
     public void canAddAndCountSections()
     {
+        Class mockClassOne = context.mock(Class.class, "classOne");
+        Class mockClassTwo = context.mock(Class.class, "classTwo");
+
+        context.checking(new Expectations()
+        {{
+            allowing(mockClassOne).getKey();
+            will(returnValue("testFirst"));
+
+            allowing(mockClassTwo).getKey();
+            will(returnValue("testSecond"));
+        }});
+
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
@@ -51,16 +63,17 @@ public class FlightTest
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
             new FlightNumber(airline.getDesignation(), 1234),
             GUFI.randomGUFI(),
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            new HashMap<>()
         );
 
         Assert.assertEquals((Integer)0, sut.countSections());
 
-        sut.addSection(context.mock(Class.class), 1, 1);
+        sut.addSection(mockClassOne, 1, 1);
 
         Assert.assertEquals((Integer)1, sut.countSections());
 
-        sut.addSection(context.mock(Class.class), 1, 1);
+        sut.addSection(mockClassTwo, 1, 1);
 
         Assert.assertEquals((Integer)2, sut.countSections());
     }

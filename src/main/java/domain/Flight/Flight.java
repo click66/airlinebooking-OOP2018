@@ -5,9 +5,11 @@ import domain.Exception.InvalidFlightNumber;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
 import domain.Flight.Section.Class.Class;
+import domain.Flight.Section.Section;
 import domain.Identifiable;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -25,6 +27,8 @@ public class Flight implements Identifiable
 
     private LocalDateTime dateTime;
 
+    private HashMap<String, Section> sections;
+
     /**
      * "Flight" constructor
      *
@@ -34,6 +38,7 @@ public class Flight implements Identifiable
      * @param flightNumber The flight number of this flight (unique to the date)
      * @param gufi         Globally Unique Flight Identifier
      * @param dateTime     Date and time of flight
+     * @param sections     Storage of sections
      */
     public Flight(
         Registrar registrar,
@@ -41,7 +46,8 @@ public class Flight implements Identifiable
         Route route,
         FlightNumber flightNumber,
         GUFI gufi,
-        LocalDateTime dateTime
+        LocalDateTime dateTime,
+        HashMap<String, Section> sections
     )
     {
         if (!registrar.isValidFlightNumber(flightNumber, dateTime.toLocalDate())) {
@@ -55,6 +61,7 @@ public class Flight implements Identifiable
         this.flightNumber = flightNumber;
         this.gufi = gufi;
         this.dateTime = dateTime;
+        this.sections = sections;
     }
 
     @Override
@@ -75,11 +82,11 @@ public class Flight implements Identifiable
 
     public void addSection(Class sectionClass, Integer rows, Integer columns)
     {
-
+        sections.put(sectionClass.getKey(), new Section());
     }
 
     public Integer countSections()
     {
-        return 2;
+        return sections.size();
     }
 }

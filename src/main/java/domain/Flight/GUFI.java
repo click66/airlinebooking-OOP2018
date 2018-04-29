@@ -15,7 +15,7 @@ public class GUFI
      *
      * @param uuid UUID from which to generate this GUFI
      */
-    public GUFI(UUID uuid)
+    GUFI(UUID uuid)
     {
         this.uuid = uuid;
     }

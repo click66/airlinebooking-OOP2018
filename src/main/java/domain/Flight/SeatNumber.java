@@ -17,7 +17,7 @@ public class SeatNumber
      * @param row    Integer of row
      * @param column Letter of column
      */
-    public SeatNumber(Integer row, String column)
+    SeatNumber(Integer row, String column)
     {
         if (row < 1) {
             throw new InvalidArgument("No or invalid row was supplied");

@@ -17,9 +17,9 @@ public class Airport implements Identifiable
     /**
      * "Airport" constructor
      *
-     * @param repository
-     * @param uuid
-     * @param name
+     * @param repository Repository of airports
+     * @param uuid       Universally unique identifier for this airport
+     * @param name       Desired airport name
      */
     public Airport(Repository repository, UUID uuid, Name name)
     {

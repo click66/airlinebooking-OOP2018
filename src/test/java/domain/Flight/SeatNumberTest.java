@@ -1,15 +1,10 @@
 package domain.Flight;
 
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import domain.Exception.InvalidArgument;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 public class SeatNumberTest
 {

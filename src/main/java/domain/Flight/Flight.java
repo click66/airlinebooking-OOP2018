@@ -81,12 +81,24 @@ public class Flight implements Identifiable
         return flightNumber;
     }
 
+    /**
+     * Add a section to this Flight
+     *
+     * @param sectionClass The class strategy to use for creating this section
+     * @param rows         The desired number of rows for this section
+     * @param columns      The desired number of columns for this section
+     */
     public void addSection(Class sectionClass, Integer rows, Integer columns)
     {
         sections.put(sectionClass.getKey(), Section.ofRowsAndColumns(rows, columns));
     }
 
-    public Integer countSections()
+    /**
+     * Get a count of the number of sections on this Flight
+     *
+     * @return The number of sections on the flight
+     */
+    public int countSections()
     {
         return sections.size();
     }
@@ -97,6 +109,7 @@ public class Flight implements Identifiable
      *
      * @param sectionClass The class strategy
      * @param seatNumber   The number of the seat to book
+     * @throws BookingRejected if the seat is already booked
      */
     public void bookSeat(Class sectionClass, SeatNumber seatNumber) throws BookingRejected
     {

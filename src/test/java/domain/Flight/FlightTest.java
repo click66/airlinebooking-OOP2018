@@ -67,15 +67,79 @@ public class FlightTest
             new HashMap<>()
         );
 
-        Assert.assertEquals((Integer)0, sut.countSections());
+        Assert.assertEquals(0, sut.countSections());
 
         sut.addSection(mockClassOne, 1, 1);
 
-        Assert.assertEquals((Integer)1, sut.countSections());
+        Assert.assertEquals(1, sut.countSections());
 
         sut.addSection(mockClassTwo, 1, 1);
 
-        Assert.assertEquals((Integer)2, sut.countSections());
+        Assert.assertEquals(2, sut.countSections());
+    }
+
+    @Test
+    public void knowsIfThereAreAvailableSeatsOfAClass()
+    {
+        Airline airline = makeTestAirline();
+
+        Flight sut = new Flight(
+            new Registrar(new HashMap<>()),
+            airline,
+            new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
+            new FlightNumber(airline.getDesignation(), 1234),
+            GUFI.randomGUFI(),
+            LocalDateTime.now(),
+            new HashMap<>()
+        );
+
+        Class mockClass = context.mock(Class.class);
+
+        context.checking(new Expectations()
+        {{
+            allowing(mockClass).getKey();
+            will(returnValue("testclass"));
+        }});
+
+        // Add a section with 1 seat
+        sut.addSection(mockClass, 1, 1);
+
+        Assert.assertTrue(sut.hasAvailableSeats(mockClass));
+
+        // Book the only seat
+        sut.bookSeat(mockClass, SeatNumber.fromString("A1"));
+
+        Assert.assertFalse(sut.hasAvailableSeats(mockClass));
+    }
+
+    @Test
+    public void knowsIfThereAreAvailableSeatsOfAnyClass()
+    {
+        HashMap<String, Section> sections = new HashMap<>();
+
+        Airline airline = makeTestAirline();
+
+        Flight sut = new Flight(
+            new Registrar(new HashMap<>()),
+            airline,
+            new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
+            new FlightNumber(airline.getDesignation(), 1234),
+            GUFI.randomGUFI(),
+            LocalDateTime.now(),
+            sections
+        );
+
+        // Add one full section
+        Section fullSection = Section.ofRowsAndColumns(1, 1);
+        fullSection.markSeatBooked(SeatNumber.fromString("A1"));
+        sections.put("full", fullSection);
+
+        Assert.assertFalse(sut.hasAvailableSeats());
+
+        // Add a second empty section
+        sections.put("empty", Section.ofRowsAndColumns(1, 1));
+
+        Assert.assertTrue(sut.hasAvailableSeats());
     }
 
     /**

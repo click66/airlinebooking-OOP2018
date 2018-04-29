@@ -94,6 +94,16 @@ class Section
     }
 
     /**
+     * Checks if this section has any available seats
+     *
+     * @return True if there are any seats available
+     */
+    public Boolean hasAvailableSeats()
+    {
+        return seatCount > bookedSeats.size();
+    }
+
+    /**
      * Validate a supplied SeatNumber to ensure it refers to a seat that exists.
      *
      * @param seatNumber The seat number to check

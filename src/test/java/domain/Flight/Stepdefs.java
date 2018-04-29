@@ -218,7 +218,7 @@ public class Stepdefs
     {
         Flight flight = flights.get(flightNumber);
 
-        Assert.assertEquals((Integer)sections, flight.countSections());
+        Assert.assertEquals(sections, flight.countSections());
     }
 
     @Then("^the created section should have (\\d+) seats$")

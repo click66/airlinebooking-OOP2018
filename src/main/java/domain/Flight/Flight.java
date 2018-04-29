@@ -151,6 +151,37 @@ public class Flight implements Identifiable
     }
 
     /**
+     * Check if any seat of the supplied class is available.
+     *
+     * @param sectionClass The class strategy
+     * @return True if any seats are available
+     */
+    public Boolean hasAvailableSeats(Class sectionClass)
+    {
+        Section section = getSection(sectionClass);
+
+        return section.hasAvailableSeats();
+    }
+
+    /**
+     * Check if any seats are available across all sections of the flight.
+     *
+     * @return True if any seats are available
+     */
+    public Boolean hasAvailableSeats()
+    {
+        // Loop through all sections, immediately returning true if any have available seats
+
+        for (Section section : sections.values()) {
+            if (section.hasAvailableSeats()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Get a section in this flight that corresponds with the supplied class strategy.
      * If this flight does not have an appropriate section, a NoSection exception will be thrown.
      *

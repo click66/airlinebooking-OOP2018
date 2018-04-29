@@ -7,6 +7,7 @@ Feature: Book A Seat
   Rules:
     - Before a seat can be booked, it must be available
     - Before a seat can be booked, a section of the desired class must exist on the flight
+    - Seats are identified by seat numbers; a seat corresponding to that number must exist
 
   Scenario: Check availability of seat
     Given a flight has a 5x5 Economy class section
@@ -49,3 +50,12 @@ Feature: Book A Seat
     Given a flight has a 2x2 Economy class section
     When I try and book seat 1A in Business
     Then the booking should fail
+
+  Scenario Outline: Book a seat that does not exist
+    Given a flight has a 2x2 Economy class section
+    When I try and book seat <seat> in Economy
+    Then the booking should fail
+    Examples:
+      | seat |
+      | 1C   |
+      | 3A   |

@@ -6,8 +6,7 @@ import domain.Exception.InvalidFlightNumber;
 import domain.Exception.NoSection;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
-import domain.Flight.Section.Class.Class;
-import domain.Flight.Section.Section;
+import domain.Flight.Class.Class;
 import domain.Identifiable;
 
 import java.time.LocalDateTime;
@@ -92,7 +91,14 @@ public class Flight implements Identifiable
         return sections.size();
     }
 
-    public void bookSeat(Class sectionClass, String seatNumber)
+    /**
+     * Book a seat on this flight identified by the supplied seat number, of the supplied class.
+     * Will throw a BookingRejected exception if the seat is already booked.
+     *
+     * @param sectionClass The class strategy
+     * @param seatNumber   The number of the seat to book
+     */
+    public void bookSeat(Class sectionClass, SeatNumber seatNumber) throws BookingRejected
     {
         Section section = getSection(sectionClass);
 
@@ -104,13 +110,13 @@ public class Flight implements Identifiable
     }
 
     /**
-     * Check if a seat of the supplied class is available
+     * Check if a seat of the supplied class is available.
      *
      * @param sectionClass The class strategy
      * @param seatNumber   The number of the seat to check
      * @return True if the seat is available, false if it is booked
      */
-    public Boolean isSeatAvailable(Class sectionClass, String seatNumber)
+    public Boolean isSeatAvailable(Class sectionClass, SeatNumber seatNumber)
     {
         Section section = getSection(sectionClass);
 
@@ -118,13 +124,13 @@ public class Flight implements Identifiable
     }
 
     /**
-     * Check if a seat of the supplied class is booked
+     * Check if a seat of the supplied class is booked.
      *
      * @param sectionClass The class strategy
      * @param seatNumber   The number of the seat to check
      * @return False if the seat is available, true if it is booked
      */
-    public Boolean isSeatBooked(Class sectionClass, String seatNumber)
+    public Boolean isSeatBooked(Class sectionClass, SeatNumber seatNumber)
     {
         Section section = getSection(sectionClass);
 
@@ -132,11 +138,12 @@ public class Flight implements Identifiable
     }
 
     /**
-     * Get a section in this flight that corresponds with the supplied class strategy
-     * If this flight does not have an appropriate section, a NoSection exception will be thrown
+     * Get a section in this flight that corresponds with the supplied class strategy.
+     * If this flight does not have an appropriate section, a NoSection exception will be thrown.
      *
      * @param sectionClass The class strategy
      * @return Section if one exists
+     * @throws NoSection if section does not exist
      */
     private Section getSection(Class sectionClass) throws NoSection
     {

@@ -9,17 +9,16 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import domain.Airline.Airline;
 import domain.Airport.Airport;
-import domain.Airport.Name;
-import domain.Airport.Repository;
 import domain.Flight.Flight;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
 import domain.Flight.GUFI;
 import domain.Flight.Route;
-import domain.Flight.Section.Class.Business;
-import domain.Flight.Section.Class.Class;
-import domain.Flight.Section.Class.Economy;
-import domain.Flight.Section.Class.First;
+import domain.Flight.SeatNumber;
+import domain.Flight.Class.Business;
+import domain.Flight.Class.Class;
+import domain.Flight.Class.Economy;
+import domain.Flight.Class.First;
 import org.junit.Assert;
 
 import java.time.LocalDateTime;
@@ -69,7 +68,7 @@ public class Stepdefs
         try {
             flight.bookSeat(
                 getClassFromString(sectionClass),
-                seatId
+                SeatNumber.fromString(seatId)
             );
         } catch (Exception exception) {
             if (trying.isEmpty()) { // If there is no try, do or do not.
@@ -88,11 +87,11 @@ public class Stepdefs
             Assert.assertTrue(
                 flight.isSeatAvailable(
                     getClassFromString(sectionClass),
-                    seatId
+                    SeatNumber.fromString(seatId)
                 )
             );
         } catch (Exception exception) {
-
+            // Ignore exception
         }
     }
 
@@ -103,7 +102,7 @@ public class Stepdefs
             Assert.assertTrue(
                 flight.isSeatBooked(
                     getClassFromString(sectionClass),
-                    seatId
+                    SeatNumber.fromString(seatId)
                 )
             );
         } catch (Exception exception) {

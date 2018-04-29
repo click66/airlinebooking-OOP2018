@@ -1,4 +1,4 @@
-package domain.Flight.Section.Class;
+package domain.Flight.Class;
 
 public class Business implements Class
 {

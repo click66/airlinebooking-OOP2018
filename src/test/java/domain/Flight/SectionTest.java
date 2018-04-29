@@ -1,6 +1,7 @@
-package domain.Flight.Section;
+package domain.Flight;
 
 import domain.Exception.InvalidSection;
+import domain.Flight.Section;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

@@ -4,7 +4,7 @@ import domain.Airline.Airline;
 import domain.Airport.Airport;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
-import domain.Flight.Section.Class.Class;
+import domain.Flight.Class.Class;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;

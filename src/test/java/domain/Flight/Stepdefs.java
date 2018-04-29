@@ -13,11 +13,10 @@ import domain.Airline.Airline;
 import domain.Airport.Airport;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
-import domain.Flight.Section.Class.Business;
-import domain.Flight.Section.Class.Class;
-import domain.Flight.Section.Class.Economy;
-import domain.Flight.Section.Class.First;
-import domain.Flight.Section.Section;
+import domain.Flight.Class.Business;
+import domain.Flight.Class.Class;
+import domain.Flight.Class.Economy;
+import domain.Flight.Class.First;
 import domain.Repository;
 import org.junit.Assert;
 

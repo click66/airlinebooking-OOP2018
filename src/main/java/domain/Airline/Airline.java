@@ -19,10 +19,10 @@ public class Airline implements Identifiable
     /**
      * "Airline" constructor
      *
-     * @param repository
-     * @param uuid
-     * @param name
-     * @param designation
+     * @param repository  Airline repository
+     * @param uuid        Airline UUID
+     * @param name        Name of airline
+     * @param designation Two-character designation
      */
     public Airline(Repository repository, UUID uuid, Name name, Designation designation)
     {

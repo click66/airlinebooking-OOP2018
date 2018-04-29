@@ -2,12 +2,16 @@ package domain.Flight.Section;
 
 import domain.Exception.InvalidSection;
 
+import java.util.ArrayList;
+
 /**
  * "Section" entity
  */
 public class Section
 {
     private Integer seatCount;
+
+    private ArrayList<String> bookedSeats = new ArrayList<>();
 
     /**
      * Private "Section" constructor
@@ -52,5 +56,15 @@ public class Section
         }
 
         return new Section(rows * columns);
+    }
+
+    public Boolean isSeatAvailable(String seatNumber)
+    {
+        return !bookedSeats.contains(seatNumber);
+    }
+
+    public void markSeatBooked(String seatNumber)
+    {
+        bookedSeats.add(seatNumber);
     }
 }

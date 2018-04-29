@@ -6,6 +6,7 @@ Feature: Book A Seat
 
   Rules:
     - Before a seat can be booked, it must be available
+    - Before a seat can be booked, a section of the desired class must exist on the flight
 
   Scenario: Check availability of seat
     Given a flight has a 5x5 Economy class section
@@ -13,7 +14,7 @@ Feature: Book A Seat
 
   Scenario: Book a seat in business class
     Given a flight has a 5x5 Business class section
-    When I book seat 1A in Business
+    When I try and book seat 1A in Business
     Then seat 1A in Economy will be booked
 
   Scenario: Book two seats in economy class
@@ -25,7 +26,7 @@ Feature: Book A Seat
 
   Scenario: Book two seats, one in economy and one in business
     Given a flight has a 2x2 Economy class section
-    And a flight has a 2x2 Business class ection
+    And a flight has a 2x2 Business class section
     When I book seat 1A in Economy
     And I book seat 1A in Business
     Then seat 1A in Economy will be booked
@@ -33,7 +34,7 @@ Feature: Book A Seat
 
   Scenario: Book one seat in economy, none in business
     Given a flight has a 2x2 Economy class section
-    And a flight has a 2x2 Business class ection
+    And a flight has a 2x2 Business class section
     When I book seat 1A in Economy
     Then seat 1A in Economy will be booked
     And seat 1A in Business will be available
@@ -42,4 +43,9 @@ Feature: Book A Seat
     Given a flight has a 2x2 Economy class section
     When I book seat 1A in Economy
     And I try and book seat 1A in Economy
+    Then the booking should fail
+
+  Scenario: Book a seat of a non-existent class
+    Given a flight has a 2x2 Economy class section
+    When I try and book seat 1A in Business
     Then the booking should fail

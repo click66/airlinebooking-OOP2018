@@ -1,7 +1,9 @@
 package domain.Flight;
 
 import domain.Airline.Airline;
+import domain.Exception.BookingRejected;
 import domain.Exception.InvalidFlightNumber;
+import domain.Exception.NoSection;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
 import domain.Flight.Section.Class.Class;
@@ -88,5 +90,60 @@ public class Flight implements Identifiable
     public Integer countSections()
     {
         return sections.size();
+    }
+
+    public void bookSeat(Class sectionClass, String seatNumber)
+    {
+        Section section = getSection(sectionClass);
+
+        if (!section.isSeatAvailable(seatNumber)) {
+            throw new BookingRejected("Seat " + seatNumber + " is already booked in the desired section");
+        }
+
+        section.markSeatBooked(seatNumber);
+    }
+
+    /**
+     * Check if a seat of the supplied class is available
+     *
+     * @param sectionClass The class strategy
+     * @param seatNumber   The number of the seat to check
+     * @return True if the seat is available, false if it is booked
+     */
+    public Boolean isSeatAvailable(Class sectionClass, String seatNumber)
+    {
+        Section section = getSection(sectionClass);
+
+        return section.isSeatAvailable(seatNumber);
+    }
+
+    /**
+     * Check if a seat of the supplied class is booked
+     *
+     * @param sectionClass The class strategy
+     * @param seatNumber   The number of the seat to check
+     * @return False if the seat is available, true if it is booked
+     */
+    public Boolean isSeatBooked(Class sectionClass, String seatNumber)
+    {
+        Section section = getSection(sectionClass);
+
+        return !section.isSeatAvailable(seatNumber);
+    }
+
+    /**
+     * Get a section in this flight that corresponds with the supplied class strategy
+     * If this flight does not have an appropriate section, a NoSection exception will be thrown
+     *
+     * @param sectionClass The class strategy
+     * @return Section if one exists
+     */
+    private Section getSection(Class sectionClass) throws NoSection
+    {
+        if (!sections.containsKey(sectionClass.getKey())) {
+            throw new NoSection("No section of the provided class exists on Flight " + flightNumber.toString());
+        }
+
+        return sections.get(sectionClass.getKey());
     }
 }

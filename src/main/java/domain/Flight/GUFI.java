@@ -6,7 +6,7 @@ import java.util.UUID;
  * "GUFI" value object
  * https://www.enri.go.jp/eiwac/2010/pdf/prete/EN2010-009.pdf
  */
-public class GUFI
+final public class GUFI
 {
     private UUID uuid;
 

@@ -5,7 +5,7 @@ import domain.Exception.InvalidArgument;
 /**
  * "Airport Name" value object
  */
-public class Name
+final public class Name
 {
     private String value;
 

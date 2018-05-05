@@ -6,7 +6,7 @@ import domain.Exception.InvalidArgument;
 /**
  * "Route" value object
  */
-public class Route
+final public class Route
 {
     /**
      * "Route" constructor

@@ -5,7 +5,7 @@ import domain.Exception.InvalidArgument;
 /**
  * "Seat Number" value object
  */
-public class SeatNumber
+final public class SeatNumber
 {
     private Integer row;
 

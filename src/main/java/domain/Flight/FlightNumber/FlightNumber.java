@@ -7,7 +7,7 @@ import domain.Exception.InvalidArgument;
 /**
  * "Flight number" value object
  */
-public class FlightNumber
+final public class FlightNumber
 {
     private Designation airlineDesignation;
 

@@ -1,6 +1,5 @@
 package domain.Flight;
 
-import application.FlightNumberRegistrar;
 import application.Repository.AirlineRepository;
 import application.Repository.AirportRepository;
 
@@ -64,7 +63,7 @@ public class Stepdefs
         flights  = new HashMap<>();
         sections = new HashMap<>();
 
-        flightNumberRegistrar = new FlightNumberRegistrar(new HashMap<>());
+        flightNumberRegistrar = new Registrar(new HashMap<>());
     }
 
     @Given("^airline (.*) has designation (.*)$")
@@ -93,7 +92,7 @@ public class Stepdefs
             flightNumberRegistrar,
             airline,
             new Route(origin, destination),
-            new FlightNumber(new domain.Airline.Designation(airlineDesignation), number),
+            new FlightNumber(airline, number),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
             sections
@@ -118,7 +117,7 @@ public class Stepdefs
                 flightNumberRegistrar,
                 airline,
                 new Route(origin, destination),
-                new FlightNumber(airline.getDesignation(), number),
+                new FlightNumber(airline, number),
                 new GUFI(toCreate),
                 LocalDateTime.of(LocalDate.of(
                     Integer.parseInt(year),
@@ -147,7 +146,7 @@ public class Stepdefs
                 flightNumberRegistrar,
                 airline,
                 new Route(origin, destination),
-                new FlightNumber(airline.getDesignation(), number),
+                new FlightNumber(airline, number),
                 new GUFI(toCreate),
                 LocalDateTime.now(),
                 sections

@@ -1,5 +1,6 @@
 package domain.Flight.FlightNumber;
 
+import domain.Airline.Airline;
 import domain.Airline.Designation;
 import domain.Exception.InvalidArgument;
 
@@ -12,9 +13,9 @@ public class FlightNumber
 
     private Integer number;
 
-    public FlightNumber(Designation airlineDesignation, Integer number)
+    public FlightNumber(Airline airline, Integer number)
     {
-        this.airlineDesignation = airlineDesignation;
+        this.airlineDesignation = airline.getDesignation();
 
         if (number < 1 || number > 9999) {
             throw new InvalidArgument("A flight number must be between 1 and 9999");

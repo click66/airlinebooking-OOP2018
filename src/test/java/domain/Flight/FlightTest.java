@@ -28,10 +28,10 @@ public class FlightTest
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
-            context.mock(Registrar.class),
+            new Registrar(new HashMap<>()),
             airline,
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
-            new FlightNumber(airline.getDesignation(), 1234),
+            new FlightNumber(airline, 1234),
             new GUFI(uuid),
             LocalDateTime.now(),
             new HashMap<>()
@@ -58,10 +58,10 @@ public class FlightTest
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
-            context.mock(Registrar.class),
+            new Registrar(new HashMap<>()),
             airline,
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
-            new FlightNumber(airline.getDesignation(), 1234),
+            new FlightNumber(airline, 1234),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
             new HashMap<>()
@@ -84,10 +84,10 @@ public class FlightTest
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
-            context.mock(Registrar.class),
+            new Registrar(new HashMap<>()),
             airline,
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
-            new FlightNumber(airline.getDesignation(), 1234),
+            new FlightNumber(airline, 1234),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
             new HashMap<>()
@@ -120,10 +120,10 @@ public class FlightTest
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
-            context.mock(Registrar.class),
+            new Registrar(new HashMap<>()),
             airline,
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
-            new FlightNumber(airline.getDesignation(), 1234),
+            new FlightNumber(airline, 1234),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
             sections

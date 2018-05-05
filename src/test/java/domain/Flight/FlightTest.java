@@ -28,7 +28,7 @@ public class FlightTest
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
-            new Registrar(new HashMap<>()),
+            context.mock(Registrar.class),
             airline,
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
             new FlightNumber(airline.getDesignation(), 1234),
@@ -58,7 +58,7 @@ public class FlightTest
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
-            new Registrar(new HashMap<>()),
+            context.mock(Registrar.class),
             airline,
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
             new FlightNumber(airline.getDesignation(), 1234),
@@ -84,7 +84,7 @@ public class FlightTest
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
-            new Registrar(new HashMap<>()),
+            context.mock(Registrar.class),
             airline,
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
             new FlightNumber(airline.getDesignation(), 1234),
@@ -120,7 +120,7 @@ public class FlightTest
         Airline airline = makeTestAirline();
 
         Flight sut = new Flight(
-            new Registrar(new HashMap<>()),
+            context.mock(Registrar.class),
             airline,
             new Route(makeTestAirport("LGW"), makeTestAirport("LAX")),
             new FlightNumber(airline.getDesignation(), 1234),

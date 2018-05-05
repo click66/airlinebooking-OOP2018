@@ -1,5 +1,6 @@
 package domain.Flight;
 
+import application.FlightNumberRegistrar;
 import application.Repository.AirlineRepository;
 import application.Repository.AirportRepository;
 
@@ -63,7 +64,7 @@ public class Stepdefs
         flights  = new HashMap<>();
         sections = new HashMap<>();
 
-        flightNumberRegistrar = new Registrar(new HashMap<>());
+        flightNumberRegistrar = new FlightNumberRegistrar(new HashMap<>());
     }
 
     @Given("^airline (.*) has designation (.*)$")

@@ -1,5 +1,6 @@
 package domain.Flight.FlightNumber;
 
+import application.FlightNumberRegistrar;
 import domain.Airline.Designation;
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,12 +8,12 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-public class RegistrarTest
+public class FlightNumberRegistrarTest
 {
     @Test
     public void isValidByDefault()
     {
-        Registrar sut = new Registrar(new HashMap<>());
+        Registrar sut = new FlightNumberRegistrar(new HashMap<>());
 
         Assert.assertTrue(sut.isValidFlightNumber(
             new FlightNumber(new Designation("SW"), 1234),
@@ -29,7 +30,7 @@ public class RegistrarTest
 
         HashMap<FlightNumber, LocalDate> map = new HashMap<>();
 
-        Registrar sut = new Registrar(map);
+        Registrar sut = new FlightNumberRegistrar(map);
 
         map.put(new FlightNumber(new Designation(designation), number), date);
 
@@ -44,7 +45,7 @@ public class RegistrarTest
 
         HashMap<FlightNumber, LocalDate> map = new HashMap<>();
 
-        Registrar sut = new Registrar(map);
+        Registrar sut = new FlightNumberRegistrar(map);
 
         map.put(
             new FlightNumber(new Designation(designation), number),
@@ -64,7 +65,7 @@ public class RegistrarTest
 
         HashMap<FlightNumber, LocalDate> map = new HashMap<>();
 
-        Registrar sut = new Registrar(map);
+        Registrar sut = new FlightNumberRegistrar(map);
 
         map.put(new FlightNumber(new Designation("SW"), 1234), date);
 
@@ -76,7 +77,7 @@ public class RegistrarTest
     {
         HashMap<FlightNumber, LocalDate> map = new HashMap<>();
 
-        Registrar sut = new Registrar(map);
+        Registrar sut = new FlightNumberRegistrar(map);
 
         map.put(
             new FlightNumber(new Designation("SW"), 1234),

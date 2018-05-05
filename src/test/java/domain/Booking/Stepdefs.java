@@ -1,5 +1,6 @@
 package domain.Booking;
 
+import application.FlightNumberRegistrar;
 import application.Repository.AirlineRepository;
 import application.Repository.AirportRepository;
 import cucumber.api.PendingException;
@@ -40,7 +41,7 @@ public class Stepdefs
         Airport dest = new Airport(new AirportRepository(new HashMap<>()), UUID.randomUUID(), new domain.Airport.Name("LAX"));
 
         flight = new Flight(
-            new Registrar(new HashMap<>()),
+            new FlightNumberRegistrar(new HashMap<>()),
             airline,
             new Route(origin, dest),
             new FlightNumber(airline.getDesignation(), 1234),

@@ -65,7 +65,7 @@ final public class Plane
     }
 
     /**
-     * Will merge all the bookings from a source plan onto a new plane
+     * Will merge all the bookings from a source plane onto a new plane
      * Returns a new plane
      *
      * @param plane Plane on which existing bookings are placed

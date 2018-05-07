@@ -29,7 +29,7 @@ final public class Plane
      *
      * @param plane The source plane
      */
-    Plane(Plane plane)
+    private Plane(Plane plane)
     {
         this.sections = plane.sections;
     }

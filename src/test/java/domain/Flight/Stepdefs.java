@@ -95,7 +95,7 @@ public class Stepdefs
             new FlightNumber(airline, number),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
-            sections
+            new Plane(sections)
         );
 
         flightRepository.store(flight);
@@ -124,7 +124,7 @@ public class Stepdefs
                     Integer.parseInt(month),
                     Integer.parseInt(date)
                 ), LocalTime.now()),
-                sections
+                new Plane(sections)
             ));
         } catch (Exception exception) {
             // Suppress exception
@@ -149,7 +149,7 @@ public class Stepdefs
                 new FlightNumber(airline, number),
                 new GUFI(toCreate),
                 LocalDateTime.now(),
-                sections
+                new Plane(sections)
             ));
         } catch (Exception exception) {
             // Ignore exception
@@ -162,7 +162,7 @@ public class Stepdefs
         Flight flight = flights.get(flightNumber);
 
         try {
-            flight.addSection(getSectionClass(sectionClass), rows, columns);
+            flight.changePlane(flight.getPlane().withSection(getSectionClass(sectionClass), rows, columns));
         } catch (Exception exception) {
             // Ignore exception
         }

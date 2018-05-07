@@ -2,15 +2,14 @@ package domain.Flight;
 
 import domain.Airline.Airline;
 import domain.Exception.BookingRejected;
+import domain.Exception.IncompatiblePlane;
 import domain.Exception.InvalidFlightNumber;
-import domain.Exception.NoSection;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
 import domain.Flight.Class.Class;
 import domain.Identifiable;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -28,7 +27,7 @@ public class Flight implements Identifiable
 
     private LocalDateTime dateTime;
 
-    private HashMap<String, Section> sections;
+    private Plane plane;
 
     /**
      * "Flight" constructor
@@ -39,7 +38,7 @@ public class Flight implements Identifiable
      * @param flightNumber The flight number of this flight (unique to the date)
      * @param gufi         Globally Unique Flight Identifier
      * @param dateTime     Date and time of flight
-     * @param sections     Storage of sections
+     * @param plane        Plane
      */
     public Flight(
         Registrar registrar,
@@ -48,7 +47,7 @@ public class Flight implements Identifiable
         FlightNumber flightNumber,
         GUFI gufi,
         LocalDateTime dateTime,
-        HashMap<String, Section> sections
+        Plane plane
     )
     {
         if (!registrar.isValidFlightNumber(flightNumber, dateTime.toLocalDate())) {
@@ -62,7 +61,7 @@ public class Flight implements Identifiable
         this.flightNumber = flightNumber;
         this.gufi = gufi;
         this.dateTime = dateTime;
-        this.sections = sections;
+        this.plane = plane;
     }
 
     @Override
@@ -82,15 +81,26 @@ public class Flight implements Identifiable
     }
 
     /**
-     * Add a section to this Flight
+     * Re-assign this flight to a different plane
+     * Will transfer all existing bookings to a new plane
      *
-     * @param sectionClass The class strategy to use for creating this section
-     * @param rows         The desired number of rows for this section
-     * @param columns      The desired number of columns for this section
+     * @param newPlane The new plane to apply
+     *
+     * @throws IncompatiblePlane If the existing bookings could not be applied to the new plane
      */
-    public void addSection(Class sectionClass, Integer rows, Integer columns)
+    public void changePlane(Plane newPlane) throws IncompatiblePlane
     {
-        sections.put(sectionClass.getKey(), Section.ofRowsAndColumns(rows, columns));
+        plane = newPlane.withBookingsFrom(plane);
+    }
+
+    /**
+     * Get the Plane to which this Flight is assigned
+     *
+     * @return The plane
+     */
+    public Plane getPlane()
+    {
+        return plane;
     }
 
     /**
@@ -100,7 +110,7 @@ public class Flight implements Identifiable
      */
     public int countSections()
     {
-        return sections.size();
+        return plane.countSections();
     }
 
     /**
@@ -113,13 +123,7 @@ public class Flight implements Identifiable
      */
     public void bookSeat(Class sectionClass, SeatNumber seatNumber) throws BookingRejected
     {
-        Section section = getSection(sectionClass);
-
-        if (!section.isSeatAvailable(seatNumber)) {
-            throw new BookingRejected("Seat " + seatNumber + " is already booked in the desired section");
-        }
-
-        section.markSeatBooked(seatNumber);
+        this.plane = plane.withBookedSeat(sectionClass, seatNumber);
     }
 
     /**
@@ -131,9 +135,7 @@ public class Flight implements Identifiable
      */
     public Boolean isSeatAvailable(Class sectionClass, SeatNumber seatNumber)
     {
-        Section section = getSection(sectionClass);
-
-        return section.isSeatAvailable(seatNumber);
+        return plane.isSeatAvailable(sectionClass, seatNumber);
     }
 
     /**
@@ -145,9 +147,7 @@ public class Flight implements Identifiable
      */
     public Boolean isSeatBooked(Class sectionClass, SeatNumber seatNumber)
     {
-        Section section = getSection(sectionClass);
-
-        return !section.isSeatAvailable(seatNumber);
+        return plane.isSeatBooked(sectionClass, seatNumber);
     }
 
     /**
@@ -158,9 +158,7 @@ public class Flight implements Identifiable
      */
     public Boolean hasAvailableSeats(Class sectionClass)
     {
-        Section section = getSection(sectionClass);
-
-        return section.hasAvailableSeats();
+        return plane.hasAvailableSeats(sectionClass);
     }
 
     /**
@@ -170,31 +168,6 @@ public class Flight implements Identifiable
      */
     public Boolean hasAvailableSeats()
     {
-        // Loop through all sections, immediately returning true if any have available seats
-
-        for (Section section : sections.values()) {
-            if (section.hasAvailableSeats()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Get a section in this flight that corresponds with the supplied class strategy.
-     * If this flight does not have an appropriate section, a NoSection exception will be thrown.
-     *
-     * @param sectionClass The class strategy
-     * @return Section if one exists
-     * @throws NoSection if section does not exist
-     */
-    private Section getSection(Class sectionClass) throws NoSection
-    {
-        if (!sections.containsKey(sectionClass.getKey())) {
-            throw new NoSection("No section of the provided class exists on Flight " + flightNumber.toString());
-        }
-
-        return sections.get(sectionClass.getKey());
+        return plane.hasAvailableSeats();
     }
 }

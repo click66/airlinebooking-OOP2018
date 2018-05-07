@@ -9,12 +9,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import domain.Airline.Airline;
 import domain.Airport.Airport;
-import domain.Flight.Flight;
+import domain.Flight.*;
 import domain.Flight.FlightNumber.FlightNumber;
 import domain.Flight.FlightNumber.Registrar;
-import domain.Flight.GUFI;
-import domain.Flight.Route;
-import domain.Flight.SeatNumber;
 import domain.Flight.Class.Business;
 import domain.Flight.Class.Class;
 import domain.Flight.Class.Economy;
@@ -46,7 +43,7 @@ public class Stepdefs
             new FlightNumber(airline, 1234),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
-            new HashMap<>()
+            new Plane(new HashMap<>())
         );
 
         bookingExceptions = new ArrayList<>();
@@ -55,11 +52,11 @@ public class Stepdefs
     @Given("^a flight has a (\\d+)x(\\d+) (.*) class section$")
     public void a_flight_has_a_x__class_section(int rows, int columns, String sectionClass)
     {
-        flight.addSection(
+        flight.changePlane(flight.getPlane().withSection(
             getClassFromString(sectionClass),
             rows,
             columns
-        );
+        ));
     }
 
     @When("^I( try and)? book seat (.*) in (.*)$")

@@ -34,7 +34,7 @@ public class FlightTest
             new FlightNumber(airline, 1234),
             new GUFI(uuid),
             LocalDateTime.now(),
-            new HashMap<>()
+            new Plane(new HashMap<>())
         );
 
         assertSame(uuid, sut.getUuid());
@@ -64,16 +64,16 @@ public class FlightTest
             new FlightNumber(airline, 1234),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
-            new HashMap<>()
+            new Plane(new HashMap<>())
         );
 
         Assert.assertEquals(0, sut.countSections());
 
-        sut.addSection(mockClassOne, 1, 1);
+        sut.changePlane(sut.getPlane().withSection(mockClassOne, 1, 1));
 
         Assert.assertEquals(1, sut.countSections());
 
-        sut.addSection(mockClassTwo, 1, 1);
+        sut.changePlane(sut.getPlane().withSection(mockClassTwo, 1, 1));
 
         Assert.assertEquals(2, sut.countSections());
     }
@@ -90,7 +90,7 @@ public class FlightTest
             new FlightNumber(airline, 1234),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
-            new HashMap<>()
+            new Plane(new HashMap<>())
         );
 
         Class mockClass = context.mock(Class.class);
@@ -102,7 +102,7 @@ public class FlightTest
         }});
 
         // Add a section with 1 seat
-        sut.addSection(mockClass, 1, 1);
+        sut.changePlane(sut.getPlane().withSection(mockClass, 1, 1));
 
         Assert.assertTrue(sut.hasAvailableSeats(mockClass));
 
@@ -126,7 +126,7 @@ public class FlightTest
             new FlightNumber(airline, 1234),
             GUFI.randomGUFI(),
             LocalDateTime.now(),
-            sections
+            new Plane(sections)
         );
 
         // Add one full section
